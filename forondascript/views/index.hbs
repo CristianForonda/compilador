@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ForondaScript</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>    
+    <input type="button" onclick="info();" class="btn btn-info" value="Ayuda"></input>
+    <div class="card text-center" style="width: 60%; margin: auto; align-content: center;">
+        <div class="card-header">
+            ForondaScript
+        </div>
+        <div class="card-body" style="width: 100%;">
+
+            <form action="/" method="get">
+                <textarea placeholder="Variables" name="variables" class="card-text" id="variables" cols="70" rows="4">{{resp.data.var}}</textarea>
+                <textarea placeholder="Script" name="par" class="card-text" id="par" cols="70" rows="8">{{resp.data.exp}}</textarea>
+                <br>                
+                <input type="submit" class="btn btn-primary" style="width: 40%;" value="Ejecutar">
+            </form>
+        </div>
+        <div style="width: 100%; text-align: center;" class="card-footer">
+            <p style="width: 100%; text-align: center;" id="salida">
+                <ul>
+                    {{resp.mens}}
+                </ul>
+            </p>
+        </div>
+    </div>
+    <div id="snackbar"></div>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        function verificar() {
+            texto = document.getElementById("par").value;
+            const paragraph = document.getElementById("salida");
+            paragraph.innerHTML = "";
+            arrayDeResultado = separador(texto);
+            for (var i = 0; i < arrayDeResultado.length; i++) {
+                var node = document.createElement("LI");
+                var textnode = document.createTextNode(arrayDeResultado[i]);
+                node.appendChild(textnode);
+                if (String(arrayDeResultado[i]).includes("error")) {
+                    node.style.color = "crimson";
+                }
+                paragraph.appendChild(node);
+            }
+        }
+        function info() {
+            swal("Instrucciones", `AQUÍ LA AYUDA 
+            -caracteres especiales-
+            Operator >= : 'MAYORIGUALQUEAJA',
+            Operator <= : 'MENORIGUALQUEAJA',
+            Operator > : 'MAYORQUE',
+            Operator < : 'MENORQUE',
+            equalityOperator-hawkscrit: 'IGUALQUE',
+            equalityOperator-clasico: '==',
+            keyword-hawkscrit: ['SI', 'SINO', 'TAMBIEN','O','REGRESA', 'IS_MISSING'],
+            keyword-clasico: ['IF', 'ELSE', 'AND', 'OR', 'RETURN', 'IS_MISSING'],
+            
+            EJEMPLO 1 
+            - variables: m = 2
+            SI ( m IGUALQUE 2 ) REGRESA 345 SINO REGRESA 0
+            
+            EJEMPLO 2
+            - variables: x = 2
+            SI ( x MAYORQUE 99 ) REGRESA 1 SI ( x MAYORIGUALQUEAJA 99 ) REGRESA 2 SINO REGRESA 0
+            
+            EJEMPLO 3
+            - variables: x = 20
+            SI ( x MAYORIGUALQUEAJA 20 ) REGRESA 1 SI ( x MENORIGUALQUEAJA 10 ) REGRESA 88 SINO REGRESA 0
+            `, "info");
+        }
+    </script>
+</body>
+
+</html>
